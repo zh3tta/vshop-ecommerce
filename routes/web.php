@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -28,9 +29,9 @@ Route::middleware('auth')->group(function () {
 
 // Admin routes
 Route::group(['prefix' => 'admin', 'middleware' => 'redirectAdmin'], function () {
-    Route::get('/login', [AdminController::class, 'showLoginForm'])->name('admin.login');
-    Route::post('/login', [AdminController::class, 'login'])->name('admin.login.post');
-    Route::post('/logout', [AdminController::class, 'logout'])->name('admin.logout');
+    Route::get('/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
+    Route::post('/login', [AdminAuthController::class, 'login'])->name('admin.login.post');
+    Route::post('/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
 });
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
