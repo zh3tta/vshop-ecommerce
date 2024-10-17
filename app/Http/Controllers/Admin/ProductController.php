@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -22,7 +24,20 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        //
+        $product = new Product($request->input());
+        $product->save();
+        if ($request->hasFile('product_images')) {
+            $productImages = $request->file('product_images');
+            foreach ($productImages as $image) {
+                $uniqueName = time() .'-'. Str::random(10) .'-'. $image->getClientOriginalExtension();
+                $image->move('product_images', $uniqueName);
+                ProductImage::create([
+                    'product_id' => $product->id,
+                    'image' => 'product_images/' . $uniqueName,
+                ]);
+            }
+        }
+        return redirect()->route('admin.products.index')->with('success', 'Product created successfully.');
     }
 
     public function show(string $id)
