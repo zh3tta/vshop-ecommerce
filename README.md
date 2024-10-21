@@ -1,4 +1,4 @@
-## App Laravel 10 + breeze/Inertia/vue3
+## vshop-webapp
 
 ## Installation
 
