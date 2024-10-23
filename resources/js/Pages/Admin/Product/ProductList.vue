@@ -1,5 +1,5 @@
 <script setup>
-import { usePage } from '@inertiajs/vue3';
+import { router, usePage } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
 const products = usePage().props.products;
@@ -18,11 +18,35 @@ const published = ref('');
 const category_id = ref('');
 const brand_id = ref('');
 const inStock = ref('');
+const productImages = ref([]);
 
 const openAddModal = () => {
     isAddProduct.value = true
     dialogVisible.value = true
     editMode.value = false;
+}
+
+const AddProduct = async () => {
+    const formData = new formData();
+    formData.append('title', title.value);
+    formData.append('price', price.value);
+    formData.append('quantity', quantity.value);
+    formData.append('description', description.value);
+    formData.append('brand_id', brand_id.value);
+    formData.append('category_id', category_id.value);
+    for (const image of productImages.value) {
+        formData.append('product_images[]', image.raw);
+    }
+
+    try {
+        await router.post('/products/store',formData,{
+            onSuccess: page => {
+                
+            },
+        })
+    } catch (err) {
+        console.log(err)
+    }
 }
 
 const openEditModal = (product) => {
