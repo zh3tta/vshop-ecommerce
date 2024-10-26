@@ -1,6 +1,11 @@
 <script setup>
 import { router, usePage } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import { Plus } from '@element-plus/icons-vue';
+
+defineProps({
+    products: Array
+})
 
 const products = usePage().props.products;
 const categories = usePage().props.categories;
@@ -8,6 +13,23 @@ const brands = usePage().props.brands;
 const isAddProduct = ref(false);
 const editMode = ref(false);
 const dialogVisible = ref(false);
+
+// upload multiple images
+const productImages = ref([]);
+const dialogImageUrl = ref('');
+const handleFileChange = (file) => {
+    console.log(file)
+    productImages.value.push(file)
+}
+
+const handlePictureCardPreview = (file) => {
+    dialogImageUrl.value = file.url
+    dialogVisible.value = true
+}
+
+const handleRemove = (file) => {
+  console.log(file)
+}
 
 // product from data
 const id = ref('');
@@ -20,7 +42,6 @@ const published = ref('');
 const category_id = ref('');
 const brand_id = ref('');
 const inStock = ref('');
-const productImages = ref([]);
 
 const openAddModal = () => {
     isAddProduct.value = true
@@ -65,8 +86,8 @@ const resetFormData = () => {
     price.value = '';
     quantity.value = '';
     description.value = '';
-    product_images.value = [];
-    // dialogImageUrl.value = '';
+    productImages.value = [];
+    dialogImageUrl.value = ''
 }
 
 const openEditModal = (product) => {
@@ -115,6 +136,18 @@ const openEditModal = (product) => {
         <div class="relative z-0 w-full mb-5 group">
             <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
             <textarea v-model="description" id="description" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Leave a description..."></textarea>
+        </div>
+        <div class="relative z-0 w-full mb-5 group">
+            <label for="productImages" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Image</label>
+            <el-upload
+                v-model:file-list="productImages"
+                list-type="picture-card" multiple
+                :on-preview="handlePictureCardPreview"
+                :on-remove="handleRemove"
+                :on-change="handleFileChange"
+            >
+                <el-icon><Plus /></el-icon>
+            </el-upload>
         </div>
         <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Confirm</button>
       </form>
