@@ -251,8 +251,8 @@ const openEditModal = (product) => {
                     <tbody>
                         <tr v-for="product in products" :key="product.id" class="border-b dark:border-gray-700">
                             <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ product.title }}</th>
-                            <td class="px-4 py-3">{{ product.category_id }}</td>
-                            <td class="px-4 py-3">{{ product.brand_id }}</td>
+                            <td class="px-4 py-3">{{ product.category.name }}</td>
+                            <td class="px-4 py-3">{{ product.brand.name }}</td>
                             <td class="px-4 py-3">{{ product.quantity }}</td>
                             <td class="px-4 py-3">$ {{ product.price }}</td>
                             <td class="px-4 py-3">{{ product.inStock }}</td>
