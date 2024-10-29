@@ -63,6 +63,12 @@ class ProductController extends Controller
         //
     }
 
+    public function deleteImage($id)
+    {
+        $image = ProductImage::where('id', $id)->delete();
+        return redirect()->route('admin.products.index')->with('success', 'Image deleted successfully.');
+    }
+
     public function destroy(string $id)
     {
         //
