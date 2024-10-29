@@ -43,6 +43,22 @@ const category_id = ref('');
 const brand_id = ref('');
 const inStock = ref('');
 
+const openEditModal = (product) => {
+    //updatde data
+    id.value = product.id;
+    title.value = product.title;
+    price.value = product.price;
+    quantity.value = product.quantity;
+    description.value = product.description;
+    brand_id.value = product.brand_id;
+    category_id.value = product.category_id;
+    product_images.value = product.product_images;
+
+    isAddProduct.value = false
+    dialogVisible.value = true
+    editMode.value = true;
+}
+
 const openAddModal = () => {
     isAddProduct.value = true
     dialogVisible.value = true
@@ -90,21 +106,25 @@ const resetFormData = () => {
     dialogImageUrl.value = ''
 }
 
-const openEditModal = (product) => {
-    //updatde data
-    id.value = product.id;
-    title.value = product.title;
-    price.value = product.price;
-    quantity.value = product.quantity;
-    description.value = product.description;
-    brand_id.value = product.brand_id;
-    category_id.value = product.category_id;
-    product_images.value = product.product_images;
-
-    isAddProduct.value = false
-    dialogVisible.value = true
-    editMode.value = true;
+const deleteImage = async (pimage, index) => {
+    try {
+        await router.delete('products/image/' + pimage.id, {
+            onSuccess: (page) => {
+                product_images.value.splice(index, 1);
+                Swal.fire({
+                    toast: true,
+                    icon: "success", 
+                    position: "top-end",
+                    showConfirmButton: false,
+                    title: page.props.flash.success
+                });
+            }
+        })
+    } catch (err) {
+        console.log(err);
+    }
 }
+
 </script>
 
 <template>
@@ -158,6 +178,15 @@ const openEditModal = (product) => {
             >
                 <el-icon><Plus /></el-icon>
             </el-upload>
+        </div>
+        <div class="flex flex-nowrap mb-8">
+            <div v-for="(pimage, index) in product_images" :key="pimage.id" class="relative w-32 h-32">
+                <img class="w-24 h-20 rounded" :src="`/${pimage.image}`" alt="">
+                <span class="absolute top-0 right-8 transform -translate-y-1/2 w-3.5 h-3.5 bg-red-400 border-2 border-white dark:border-gray-800 rounded-full">
+                    <span @click="deleteImage(pimage, index)"
+                        class="text-white text-xs font-bold absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">x</span>
+                </span>
+            </div>
         </div>
         <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Confirm</button>
       </form>
@@ -278,13 +307,13 @@ const openEditModal = (product) => {
                                     class="px-3 py-2 text-xs font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">UnPublished</button>
                             </td>
                             <td class="px-4 py-3 flex items-center justify-end">
-                                <button id="apple-imac-27-dropdown-button" data-dropdown-toggle="apple-imac-27-dropdown" class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100" type="button">
+                                <button :id="`${product.id}-button`" :data-dropdown-toggle="`${product.id}`" class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100" type="button">
                                     <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
                                     </svg>
                                 </button>
-                                <div id="apple-imac-27-dropdown" class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
-                                    <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="apple-imac-27-dropdown-button">
+                                <div :id="`${product.id}`" class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
+                                    <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" :aria-labelledby="`${product.id}-button`">
                                         <li>
                                             <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Show</a>
                                         </li>
