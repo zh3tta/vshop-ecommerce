@@ -170,7 +170,7 @@ const deleteProduct = (product, index) => {
     }).then((result) => {
         if (result.isConfirmed) {
             try {
-                router.delete('products/destory/' + product.id, {
+                router.delete('products/destroy/' + product.id, {
                     onSuccess: (page) => {
                         this.delete(product, index);
                         Swal.fire({
