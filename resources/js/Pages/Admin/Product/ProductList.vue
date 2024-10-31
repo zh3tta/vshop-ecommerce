@@ -377,16 +377,11 @@ const deleteProduct = (product, index) => {
                                     </svg>
                                 </button>
                                 <div :id="`${product.id}`" class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
-                                    <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" :aria-labelledby="`${product.id}-button`">
-                                        <!-- <li>
-                                            <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Show</a>
-                                        </li> -->
-                                        <li>
-                                            <button @click="openEditModal(product)" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</button>
-                                        </li>
-                                    </ul>
+                                    <div class="py-1" :aria-labelledby="`${product.id}-button`">
+                                        <a href="#" @click="openEditModal(product)" class="block py-2 px-4 text-sm text-blue-700 hover:bg-blue-100 dark:hover:bg-blue-600 dark:text-blue-200 dark:hover:text-white">Edit</a>
+                                    </div>
                                     <div class="py-1">
-                                        <a href="#" @click="deleteProduct(product, index)" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete</a>
+                                        <a href="#" @click="deleteProduct(product, index)" class="block py-2 px-4 text-sm text-red-700 hover:bg-red-100 dark:hover:bg-red-600 dark:text-red-200 dark:hover:text-white">Delete</a>
                                     </div>
                                 </div>
                             </td>
