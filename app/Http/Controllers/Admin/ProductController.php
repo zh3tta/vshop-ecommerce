@@ -25,11 +25,6 @@ class ProductController extends Controller
         ]);
     }
 
-    public function create()
-    {
-        //
-    }
-
     public function store(Request $request)
     {
         $product = new Product($request->input());
@@ -46,16 +41,6 @@ class ProductController extends Controller
             }
         }
         return redirect()->route('admin.products.index')->with('success', 'Product created successfully.');
-    }
-
-    public function show(string $id)
-    {
-        //
-    }
-
-    public function edit(string $id)
-    {
-        //
     }
 
     public function update(Request $request, $id)
