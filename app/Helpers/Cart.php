@@ -3,6 +3,8 @@
 namespace App\Helpers;
 
 use App\Models\CartItem;
+use App\Models\Product;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cookie;
 
 class Cart
@@ -79,5 +81,14 @@ class Cart
         if (!empty($newCartItems)) {
             CartItem::insert($newCartItems);
         }
+    }
+
+    public static function getProductsAndCartItems()
+    {
+        $cartItems = self::getCartItems();
+        $ids = Arr::pluck($cartItems, 'product_id');
+        $products = Product::whereIn('id', $ids)->with('product_images')->get();
+        $cartItems = Arr::keyBy($cartItems, 'product_id');
+        return [$products, $cartItems];
     }
 }
