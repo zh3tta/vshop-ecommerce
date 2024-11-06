@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 // User routes
-Route::get('/', [UserController::class, 'index'])->name('user.home');
+Route::get('/', [UserController::class, 'index'])->name('home');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
