@@ -65,7 +65,7 @@ function submit() {
                   Product
                 </th>
                 <th scope="col" class="px-6 py-3">
-                  Qty
+                  Quantity
                 </th>
                 <th scope="col" class="px-6 py-3">
                   Price
@@ -80,10 +80,10 @@ function submit() {
                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                 <td class="w-32 p-4">
                   <img v-if="product.product_images.length > 0"
-                      :src="`/${product.product_images[0].image}`" alt="Apple Watch">
+                      :src="`/${product.product_images[0].image}`" :alt="product.slug">
                   <img v-else
                       src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/330px-No-Image-Placeholder.svg.png"
-                      alt="Apple Watch">
+                      :alt="product.slug">
                 </td>
                 <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
                   {{ product.title }}
@@ -145,33 +145,33 @@ function submit() {
           
           <form @submit.prevent="submit">
             <div class="relative mb-4">
-              <label for="name" class="leading-7 text-sm text-gray-600">Address 1</label>
-              <input type="text" id="name" name="address1" v-model="form.address1"
+              <label for="address1" class="leading-7 text-sm text-gray-600">Address 1</label>
+              <input type="text" id="address1" name="address1" v-model="form.address1"
                   class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
             </div>
             <div class="relative mb-4">
-              <label for="email" class="leading-7 text-sm text-gray-600">City</label>
-              <input type="text" id="email" name="city" v-model="form.city"
+              <label for="city" class="leading-7 text-sm text-gray-600">City</label>
+              <input type="text" id="city" name="city" v-model="form.city"
                   class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
             </div>
             <div class="relative mb-4">
-              <label for="email" class="leading-7 text-sm text-gray-600">State</label>
-              <input type="text" id="email" name="state" v-model="form.state"
+              <label for="state" class="leading-7 text-sm text-gray-600">State</label>
+              <input type="text" id="state" name="state" v-model="form.state"
                   class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
             </div>
             <div class="relative mb-4">
-              <label for="email" class="leading-7 text-sm text-gray-600">Zipcode</label>
-              <input type="text" id="email" name="zipcode" v-model="form.zipcode"
+              <label for="zipcode" class="leading-7 text-sm text-gray-600">Zipcode</label>
+              <input type="text" id="zipcode" name="zipcode" v-model="form.zipcode"
                   class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
             </div>
             <div class="relative mb-4">
-              <label for="email" class="leading-7 text-sm text-gray-600">Country Code</label>
-              <input type="text" id="email" name="countrycode" v-model="form.country_code"
+              <label for="country_code" class="leading-7 text-sm text-gray-600">Country Code</label>
+              <input type="text" id="country_code" name="countrycode" v-model="form.country_code"
                   class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
             </div>
             <div class="relative mb-4">
-              <label for="email" class="leading-7 text-sm text-gray-600">Address type</label>
-              <input type="text" id="email" name="type" v-model="form.type"
+              <label for="type" class="leading-7 text-sm text-gray-600">Address type</label>
+              <input type="text" id="type" name="type" v-model="form.type"
                   class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
             </div>
             <button v-if="formFilled || userAddress" type="submit"
