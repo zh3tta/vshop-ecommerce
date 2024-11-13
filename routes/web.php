@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 
 // User routes
 Route::get('/', [UserController::class, 'index'])->name('home');
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/purchases', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('purchases');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
