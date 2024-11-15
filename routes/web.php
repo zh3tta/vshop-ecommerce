@@ -43,6 +43,7 @@ Route::prefix('cart')->controller(CartController::class)->group(function () {
 
 Route::prefix('products')->controller(ProductListController::class)->group(function () {
     Route::get('/', 'index')->name('products.index');
+    Route::get('detail/{product}', 'detail')->name('products.detail');
 });
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {

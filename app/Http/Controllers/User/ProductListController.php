@@ -24,4 +24,12 @@ class ProductListController extends Controller
             'products' => ProductResource::collection($filterProducts)
         ]);
     }
+
+    public function detail(Product $product)
+    {
+        $details = Product::where('id', $product->id)->with('category', 'brand', 'product_images')->get();
+        return Inertia::render('User/DetailProduct', [
+            'details' => $details,
+        ]);
+    }
 }
