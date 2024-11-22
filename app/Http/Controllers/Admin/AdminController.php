@@ -3,13 +3,25 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Brand;
+use App\Models\Category;
+use App\Models\Order;
+use App\Models\Product;
 use Inertia\Inertia;
 
 class AdminController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Admin/Dashboard');
+        $sales = Order::count();
+        $products = Product::count();
+        $brands = Brand::count();
+        $categories = Category::count();
+        return Inertia::render('Admin/Dashboard', [
+            'sales' => $sales,
+            'products' => $products,
+            'brands' => $brands,
+            'categories' => $categories,
+        ]);
     }
 }
