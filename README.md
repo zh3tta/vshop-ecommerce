@@ -3,8 +3,8 @@
 ## Installation
 
 ```bash
-git clone https://github.com/byZhetta/webapp-laravel10-breezevue.git
-cd webapp-laravel10-breezevue
+git clone https://github.com/zhetta/vshop-webapp.git
+cd vshop-webapp
 composer install
 npm install
 php artisan key:generate # key 
