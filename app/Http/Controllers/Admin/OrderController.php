@@ -13,7 +13,7 @@ class OrderController extends Controller
     public function index()
     {
         $orderItems = OrderItem::with('product')->get();
-        $orders = Order::with('order_items', 'user_address')->get();
+        $orders = Order::with('order_items', 'user_address')->paginate(10);
         return Inertia::render('Admin/Order/Index', [
             'orderItems' => $orderItems,
             'orders' => $orders,
