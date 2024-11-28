@@ -1,7 +1,7 @@
 <script setup>
 import { router, usePage } from '@inertiajs/vue3';
 import { ref } from 'vue';
-import { Plus } from '@element-plus/icons-vue';
+import { Delete, Plus, ZoomIn } from '@element-plus/icons-vue';
 
 defineProps({
     products: Array
@@ -13,22 +13,20 @@ const brands = usePage().props.brands;
 const isAddProduct = ref(false);
 const editMode = ref(false);
 const dialogVisible = ref(false);
+const dialogVisibleImage = ref(false);
 
 // upload multiple images
 const productImages = ref([]);
 const dialogImageUrl = ref('');
-const handleFileChange = (file) => {
-    console.log(file)
-    productImages.value.push(file)
-}
+const disabled = ref(false)
 
 const handlePictureCardPreview = (file) => {
     dialogImageUrl.value = file.url
-    dialogVisible.value = true
+    dialogVisibleImage.value = true
 }
 
 const handleRemove = (file) => {
-  console.log(file)
+    productImages.value = productImages.value.filter((f) => f.uid !== file.uid);
 }
 
 // product from data
@@ -238,24 +236,36 @@ const changePage = (url) => {
         </div>
         <div class="relative z-0 w-full mb-5 group">
             <label for="productImages" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Image</label>
-            <el-upload
-                v-model:file-list="productImages"
-                list-type="picture-card" multiple
-                :on-preview="handlePictureCardPreview"
-                :on-remove="handleRemove"
-                :on-change="handleFileChange"
-            >
+            <el-upload v-model:file-list="productImages" list-type="picture-card" multiple :auto-upload="false">
                 <el-icon><Plus /></el-icon>
+                <template #file="{ file }">
+                    <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
+                    <span class="el-upload-list__item-actions">
+                        <span class="el-upload-list__item-preview"
+                        @click="handlePictureCardPreview(file)"
+                        >
+                            <el-icon><zoom-in /></el-icon>
+                        </span>
+                        <span v-if="!disabled" class="el-upload-list__item-delete"
+                        @click="handleRemove(file)"
+                        >
+                            <el-icon><Delete /></el-icon>
+                        </span>
+                    </span>
+                </template>
             </el-upload>
         </div>
-        <div class="flex flex-nowrap mb-8">
+        <div class="flex flex-nowrap">
             <div v-for="(pimage, index) in product_images" :key="pimage.id" class="relative w-32 h-32">
                 <img class="w-24 h-20 rounded" :src="`/${pimage.image}`" alt="">
                 <span class="absolute top-0 right-8 transform -translate-y-1/2 w-3.5 h-3.5 bg-red-400 border-2 border-white dark:border-gray-800 rounded-full">
-                    <span @click="deleteImage(pimage, index)"
-                        class="text-white text-xs font-bold absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">x</span>
+                    <button @click="deleteImage(pimage, index)"
+                        class="text-white text-xs font-bold absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">x</button>
                 </span>
             </div>
+            <el-dialog v-model="dialogVisibleImage">
+                <img w-full :src="dialogImageUrl" alt="Preview Image" />
+            </el-dialog>
         </div>
         <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Confirm</button>
       </form>
