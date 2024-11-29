@@ -68,6 +68,18 @@ class ProductController extends Controller
         return redirect()->route('admin.products.index')->with('success', 'Product updated successfully.');
     }
 
+    public function changePublished($id)
+    {
+        $product = Product::findOrFail($id);
+        if ($product->published == 0) {
+            $product->update(['published' => 1]);
+            return redirect()->route('admin.products.index')->with('success', 'Product updated successfully.');
+        } else {
+            $product->update(['published' => 0]);
+            return redirect()->route('admin.products.index')->with('success', 'Product updated successfully.');
+        }
+    }
+
     public function deleteImage($id)
     {
         $image = ProductImage::where('id', $id)->delete();
