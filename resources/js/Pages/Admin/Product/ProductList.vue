@@ -155,6 +155,24 @@ const updateProduct = async () => {
     }
 }
 
+const updatePublished = async (product) => {
+    try {
+        await router.get('products/change-published/' + product.id, {
+            onSuccess: page => {
+                Swal.fire({
+                    toast: true,
+                    icon: "success",
+                    position: "top-end",
+                    showConfirmButton: false,
+                    title: page.props.flash.success,
+                })
+            },
+        })
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 const deleteProduct = (product, index) => {
     Swal.fire({
         title: 'Are you Sure',
@@ -320,15 +338,15 @@ const changePage = (url) => {
                             <td class="px-4 py-3">{{ product.quantity }}</td>
                             <td class="px-4 py-3">$ {{ product.price }}</td>
                             <td class="px-4 py-3">
-                                <span v-if="product.inStock == 0"
+                                <span v-if="product.quantity >= 1"
                                     class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">inStock</span>
                                 <span v-else
-                                    class="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">Out of Stock</span>
+                                    class="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">OutOfStock</span>
                             </td>
                             <td class="px-4 py-3">
-                                <button v-if="product.published == 0" type="button"
+                                <button v-if="product.published == 0" type="button" @click="updatePublished(product)"
                                     class="px-3 py-2 text-xs font-medium text-center text-white bg-green-700 rounded-lg hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Published</button>
-                                <button v-else type="button"
+                                <button v-else type="button" @click="updatePublished(product)"
                                     class="px-3 py-2 text-xs font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">UnPublished</button>
                             </td>
                             <td class="px-4 py-3 flex items-center justify-end">
