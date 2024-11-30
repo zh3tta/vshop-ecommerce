@@ -13,7 +13,7 @@ class ProductListController extends Controller
 {
     public function index()
     {
-        $products = Product::with('category', 'brand', 'product_images');
+        $products = Product::with('category', 'brand', 'product_images')->where('published', 0);
         $filterProducts = $products->filtered()->paginate(9)->withQueryString();
         $categories = Category::get();
         $brands = Brand::get();
