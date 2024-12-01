@@ -25,9 +25,9 @@ class ProductListController extends Controller
         ]);
     }
 
-    public function detail(Product $product)
+    public function detail($product)
     {
-        $details = Product::where('id', $product->id)->with('category', 'brand', 'product_images')->get();
+        $details = Product::where('slug', $product)->with('category', 'brand', 'product_images')->get();
         return Inertia::render('User/DetailProduct', [
             'details' => $details,
         ]);
