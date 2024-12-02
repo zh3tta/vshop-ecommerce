@@ -123,8 +123,8 @@ function submit() {
                   $ {{ product.price }}
                 </td>
                 <td class="px-6 py-4">
-                  <a @click="remove(product)"
-                    class="font-medium text-red-600 dark:text-red-500 hover:underline">Remove</a>
+                  <button @click="remove(product)"
+                    class="font-medium text-red-600 dark:text-red-500 hover:underline">Remove</button>
                 </td>
               </tr>
             </tbody>
