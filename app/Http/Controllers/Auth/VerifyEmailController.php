@@ -17,7 +17,7 @@ class VerifyEmailController extends Controller
     {
         if ($request->user()->hasVerifiedEmail()) {
             // return redirect()->intended(RouteServiceProvider::HOME.'?verified=1');
-            return redirect()->route('home'.'?verified=1');
+            return redirect()->intended(route('home').'?verified=1');
         }
 
         if ($request->user()->markEmailAsVerified()) {
@@ -25,6 +25,6 @@ class VerifyEmailController extends Controller
         }
 
         // return redirect()->intended(RouteServiceProvider::HOME.'?verified=1');
-        return redirect()->route('home'.'?verified=1');
+        return redirect()->intended(route('home').'?verified=1');
     }
 }
