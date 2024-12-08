@@ -11,6 +11,7 @@ use App\Models\Payment;
 use App\Models\UserAddress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Stripe\Checkout\Session;
 use Stripe\Stripe;
@@ -129,7 +130,7 @@ class CheckoutController extends Controller
                 $order->status = 'paid';
                 $order->save();
             }
-            return redirect()->route('dashboard');
+            return Redirect::route('home');
         } catch (\Exception $e) {
             throw new NotFoundHttpException();
         }
