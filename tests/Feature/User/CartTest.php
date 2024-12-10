@@ -30,4 +30,17 @@ class CartTest extends TestCase
 
         $response->assertRedirect(route('home'));
     }
+
+    public function test_add_product_to_cart(): void
+    {
+        Brand::factory(2)->create();
+        Category::factory(2)->create();
+        $product = Product::factory()->create();
+        $user = User::factory()->create();
+
+        $this->actingAs($user);
+        $response = $this->post('/cart/store/'. $product->id);
+
+        $response->assertRedirect();
+    }
 }
