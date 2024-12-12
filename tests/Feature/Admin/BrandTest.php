@@ -5,7 +5,6 @@ namespace Tests\Feature\Admin;
 use App\Models\Brand;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class BrandTest extends TestCase
@@ -57,5 +56,4 @@ class BrandTest extends TestCase
 
         $response->assertRedirect();
     }
-
 }
