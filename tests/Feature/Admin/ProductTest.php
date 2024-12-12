@@ -5,6 +5,7 @@ namespace Tests\Feature\Admin;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductImage;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -83,6 +84,13 @@ class ProductTest extends TestCase
 
     public function test_delete_image_product(): void
     {
+        Brand::factory()->create();
+        Category::factory()->create();
+        Product::factory()->create();
+        $image = ProductImage::factory()->create();
+        $response = $this->actingAs($this->adminUser)
+            ->delete('/admin/products/image/'. $image->id);
         
+        $response->assertRedirect();
     }
 }
