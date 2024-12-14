@@ -1,10 +1,10 @@
-## vshop-webapp
+# Ecommerce Web App
 
 ## Installation
 
 ```bash
-git clone https://github.com/zhetta/vshop-webapp.git
-cd vshop-webapp
+git clone https://github.com/zh3tta/vshop-ecommerce.git
+cd vshop-ecommerce
 composer install
 npm install
 php artisan key:generate # key 
