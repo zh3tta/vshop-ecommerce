@@ -16,22 +16,19 @@ class CheckoutTest extends TestCase
 
     public function test_purchase_order_checkout(): void
     {
-        Brand::factory(3)->create();
-        Category::factory(4)->create();
-        $products = Product::factory(10)->create();
+        Brand::factory()->create();
+        Category::factory()->create();
+        $products = Product::factory()->create();
         $user = User::factory()->create();
-        $cart = [
-            ['quantity' => 3, 'product_id' =>1],
-            ['quantity' => 1, 'product_id' =>3],
-            ['quantity' => 2, 'product_id' =>5],
-        ];
         $address = UserAddress::factory()->create();
         
         $response = $this->actingAs($user)->post('/checkout/order', [
-            'carts' => $cart,
-            'products' => $products,
-            'address' => $address,
-            'total' => 1999.00,
+            'carts' => [
+                ['quantity' => 2, 'product_id' => $products->id]
+            ],
+            'products' => [$products->toArray()],
+            'address' => $address->toArray(),
+            'total' => $products->price * 2,
         ]);
         $response->assertSessionHasNoErrors();
         
